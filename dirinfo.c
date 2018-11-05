@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 
 //list all the files in the directory
-void fileInfo( char * path){
+void file_info( char * path){
   DIR * dir = opendir(path);
   int size = 0;
   struct stat * size_buff = malloc(sizeof(struct stat));
@@ -25,6 +25,11 @@ void fileInfo( char * path){
   printf("Total directory size: %d bytes\n", size);
 }
 
-int main(){
-  fileInfo(".");
+int main( int argc, char *argv[]){
+  if( ! argv[1] || opendir(argv[1]) == NULL)
+    printf("please enter a valid directory:\n");
+  char directory[256];
+  scanf( "%s", directory);
+  file_info( directory);
+  return 0;
 }
