@@ -3,6 +3,8 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
+#include <string.h>
 
 //list all the files in the directory
 void file_info( char * path){
@@ -26,10 +28,16 @@ void file_info( char * path){
 }
 
 int main( int argc, char *argv[]){
+  //file_info(".");
   if( ! argv[1] || opendir(argv[1]) == NULL)
     printf("please enter a valid directory:\n");
   char directory[256];
   scanf( "%s", directory);
+  DIR * d = opendir(directory);
+  if (errno > 0) {
+     printf("Error: %s\n",strerror(errno));
+     return 0;
+   }
   file_info( directory);
   return 0;
 }
